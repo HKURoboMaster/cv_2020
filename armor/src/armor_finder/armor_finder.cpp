@@ -57,7 +57,7 @@ ArmorFinder::ArmorFinder(uint8_t &color, Serial &u, const string &paras_folder, 
         tracking_cnt(0) {
 }
 
-void ArmorFinder::run(cv::Mat &src) {
+void ArmorFinder::run(cv::Mat &src, float &last_yaw, float &last_pitch) {
     getsystime(frame_time); //　获取当前帧时间(不是足够精确)
 //    stateSearchingTarget(src);                    // for debug
 //    goto end;
@@ -96,7 +96,7 @@ end:
         anti_top_cnt = 0;
         time_seq.clear();
         angle_seq.clear();
-        sendBoxPosition(0);// This will be newest version protocol
+        sendBoxPosition(last_yaw, last_pitch, 1);// This will be newest version protocol
     }
 
     if(target_box.rect != cv::Rect2d()){

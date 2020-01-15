@@ -17,6 +17,7 @@
 #include <camera/wrapper_head.h>
 #include <energy/energy.h>
 #include <armor_finder/armor_finder.h>
+#include <armor_finder/protocol.h>
 #include <options.h>
 #include <additions.h>
 #include <config/setconfig.h>
@@ -48,9 +49,19 @@ ArmorFinder armor_finder(mcu_data.enemy_color, serial, PROJECT_DIR"/tools/para/"
 // 能量机关主程序对象
 Energy energy(serial, mcu_data.enemy_color);
 
+bool serial_comm;
+
 int main(int argc, char *argv[]) {
     processOptions(argc, argv);             // 处理命令行参数
     thread receive(uartReceive, &serial);   // 开启串口接收线程
+    string serial_device("/dev/serial_sdk");
+    serial_comm = true;
+
+    if(serial_comm && !protocol::Connect(serial_device.c_str()))
+    {
+        cerr << "Unable to connect " << serial_device << endl;
+        return 1;
+    }                                       //连接设备
 
     int from_camera = 1;                    // 根据条件选择视频源
     if (!run_with_camera) {
@@ -80,6 +91,7 @@ int main(int argc, char *argv[]) {
         }
         bool ok = true;
         cout << "start running" << endl;
+        float last_yaw = 0.0f, last_pitch = 0.0f;
         do {
             char curr_state = mcu_data.state;
             CNT_TIME("Total", {
@@ -140,7 +152,7 @@ int main(int argc, char *argv[]) {
                         if (show_origin) showOrigin(src);
                     });
                     CNT_TIME(STR_CTR(WORD_CYAN, "Armor Time"), {
-                        armor_finder.run(src);
+                        armor_finder.run(src, last_yaw, last_pitch);
                     });
                 }
                 last_state = curr_state;//更新上一帧状态
@@ -151,6 +163,7 @@ int main(int argc, char *argv[]) {
         video = nullptr;
         cout << "Program fails. Restarting" << endl;
     }
+    protocol::Disconnect();
     return 0;
 }
 
