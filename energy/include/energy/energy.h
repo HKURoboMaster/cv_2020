@@ -24,7 +24,7 @@ using std::vector;
 
 class Energy {
 public:
-    Energy(Serial &u, uint8_t &color);//构造函数，参数为串口和敌方颜色
+    Energy(uint8_t &color);//构造函数，参数为串口和敌方颜色
     ~Energy();//默认析构函数
 
     bool is_big;//大符模式为true
@@ -32,10 +32,10 @@ public:
 
     void run(cv::Mat &src);
 
-    Serial &serial;//串口
+    //Serial &serial;//串口
     void setEnergyInit();//设置能量机关初始化
     void sendEnergy();//发送能量机关数据
-    void sendTarget(Serial& serial, float x, float y, float z, uint16_t u);//发送数据
+    void sendTarget(float x, float y, float z, uint16_t u);//发送数据
 
 
 private:

@@ -13,7 +13,7 @@ using std::vector;
 //----------------------------------------------------------------------------------------------------------------------
 // 此函数为能量机关构造函数，只要程序不重启就不会重新构造
 // ---------------------------------------------------------------------------------------------------------------------
-Energy::Energy(Serial &u, uint8_t &color) : serial(u), ally_color(color),
+Energy::Energy(uint8_t &color) :  ally_color(color),
                                             src_blue(SRC_HEIGHT, SRC_WIDTH, CV_8UC1),
                                             src_red(SRC_HEIGHT, SRC_WIDTH, CV_8UC1) {
     initEnergy();

@@ -46,8 +46,7 @@ std::map<string, int> prior_red = {
         {"NO", 10},
 };
 
-ArmorFinder::ArmorFinder(uint8_t &color, Serial &u, const string &paras_folder, const uint8_t &anti_top) :
-        serial(u),
+ArmorFinder::ArmorFinder(uint8_t &color, const string &paras_folder, const uint8_t &anti_top) :
         enemy_color(color),
         is_anti_top(anti_top),
         state(STANDBY_STATE),

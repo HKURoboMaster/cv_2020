@@ -41,26 +41,23 @@ McuData mcu_data = {    // 单片机端回传结构体
 };
 
 WrapperHead *video = nullptr;    // 云台摄像头视频源
-
-Serial serial(115200);                  // 串口对象
 uint8_t last_state = ARMOR_STATE;     // 上次状态，用于初始化
 // 自瞄主程序对象
-ArmorFinder armor_finder(mcu_data.enemy_color, serial, PROJECT_DIR"/tools/para/", mcu_data.anti_top);
+ArmorFinder armor_finder(mcu_data.enemy_color, PROJECT_DIR"/tools/para/", mcu_data.anti_top);
 // 能量机关主程序对象
-Energy energy(serial, mcu_data.enemy_color);
+Energy energy(mcu_data.enemy_color);
 
 bool serial_comm;
 
 int main(int argc, char *argv[]) {
     processOptions(argc, argv);             // 处理命令行参数
-    thread receive(uartReceive, &serial);   // 开启串口接收线程
     string serial_device("/dev/serial_sdk");
     serial_comm = true;
 
     if(serial_comm && !protocol::Connect(serial_device.c_str()))
     {
         cerr << "Unable to connect " << serial_device << endl;
-        return 1;
+        //return 1;
     }                                       //连接设备
 
     int from_camera = 1;                    // 根据条件选择视频源

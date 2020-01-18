@@ -93,7 +93,7 @@ typedef std::vector<ArmorBox> ArmorBoxes;
 /********************* 自瞄类定义 **********************/
 class ArmorFinder{
 public:
-    ArmorFinder(uint8_t &color, Serial &u, const string &paras_folder, const uint8_t &anti_top);
+    ArmorFinder(uint8_t &color, const string &paras_folder, const uint8_t &anti_top);
     ~ArmorFinder() = default;
 
 private:
@@ -112,8 +112,7 @@ private:
     cv::Ptr<cv::Tracker> tracker;                       // tracker对象实例
     Classifier classifier;                              // CNN分类器对象实例，用于数字识别
     int contour_area;                                   // 装甲区域亮点个数，用于数字识别未启用时判断是否跟丢（已弃用）
-    int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪
-    Serial &serial;                                     // 串口对象，引用外部变量，用于和能量机关共享同一个变量
+    int tracking_cnt;                                   // 记录追踪帧数，用于定时退出追踪                                   // 串口对象，引用外部变量，用于和能量机关共享同一个变量
     systime last_front_time;                            // 上次陀螺正对时间
     int anti_top_cnt;
     RoundQueue<double, 4> top_periodms;                 // 陀螺周期循环队列
@@ -130,9 +129,9 @@ private:
 
     void antiTop();                                     // 反小陀螺
 
-    bool sendBoxPosition(uint16_t shoot);               // 和主控板通讯
+    bool sendBoxPosition(float& last_yaw, float& last_pitch, bool shoot);               // 和主控板通讯
 public:
-    void run(cv::Mat &src);                             // 自瞄主函数
+    void run(cv::Mat &src, float &last_yaw, float &last_pitch);                             // 自瞄主函数
 };
 
 #endif /* _ARMOR_FINDER_H_ */

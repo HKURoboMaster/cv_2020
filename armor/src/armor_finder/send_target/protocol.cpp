@@ -165,11 +165,11 @@ struct gimbal_ctrl
             uint8_t pitch_mode: 1;
         } bit;
     } ctrl;
-    bool shoot;
+    //bool shoot;
     float pitch;
     float yaw;
-    float pitch_speed;
-    float yaw_speed;
+    //float pitch_speed;
+    //float yaw_speed;
 };
 
 struct header
@@ -216,9 +216,9 @@ bool SendGimbalAngle(const float yaw, const float pitch, const float yaw_speed, 
     gimbal_ctrl_data.ctrl.bit.yaw_mode = 1;
     gimbal_ctrl_data.pitch = pitch;
     gimbal_ctrl_data.yaw = yaw;
-    gimbal_ctrl_data.pitch_speed = pitch_speed;
-    gimbal_ctrl_data.yaw_speed = yaw_speed;
-    gimbal_ctrl_data.shoot = shoot;
+    //gimbal_ctrl_data.pitch_speed = pitch_speed;
+    //gimbal_ctrl_data.yaw_speed = yaw_speed;
+    //gimbal_ctrl_data.shoot = shoot;
 
     ++header_data.seq_num;
     header_data.length = pack_length;

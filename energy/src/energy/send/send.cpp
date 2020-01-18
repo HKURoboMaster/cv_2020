@@ -32,11 +32,11 @@ void Energy::sendEnergy() {
     last_pitch = tmp_pitch;
 
     if (change_target) {
-        sendTarget(serial, yaw_rotation, pitch_rotation, 3, 0);//表示目标切换
+        sendTarget(yaw_rotation, pitch_rotation, 3, 0);//表示目标切换
     } else if (is_guessing) {
-        sendTarget(serial, yaw_rotation, pitch_rotation, 4, 0);//表示猜测模式
+        sendTarget(yaw_rotation, pitch_rotation, 4, 0);//表示猜测模式
     } else {
-        sendTarget(serial, yaw_rotation, pitch_rotation, shoot, 0);//跟随或发弹
+        sendTarget(yaw_rotation, pitch_rotation, shoot, 0);//跟随或发弹
     }
 
 }
@@ -45,7 +45,7 @@ void Energy::sendEnergy() {
 //----------------------------------------------------------------------------------------------------------------------
 // 此函数用于发送数据给主控板
 // ---------------------------------------------------------------------------------------------------------------------
-void Energy::sendTarget(Serial &serial, float x, float y, float z, uint16_t u) {
+void Energy::sendTarget(float x, float y, float z, uint16_t u) {
     short x_tmp, y_tmp, z_tmp;
     uint8_t buff[10];
 
@@ -75,7 +75,7 @@ void Energy::sendTarget(Serial &serial, float x, float y, float z, uint16_t u) {
     buff[7] = static_cast<char>((u >> 8) & 0xFF);
     buff[8] = static_cast<char>((u >> 0) & 0xFF);
     buff[9] = 'e';
-    serial.WriteData(buff, sizeof(buff));
+    //serial.WriteData(buff, sizeof(buff));
     send_cnt += 1;
 //    LOGM(STR_CTR(WORD_LIGHT_PURPLE, "send"));
 }

@@ -19,9 +19,9 @@
 #ifndef CRC_H_
 #define CRC_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
 
 #include <stddef.h>
 #include <stdint.h>
@@ -29,8 +29,8 @@ extern "C" {
 uint16_t CRC16Calc(const uint8_t *data_ptr, size_t length);
 uint32_t CRC32Calc(const uint8_t *data_ptr, size_t length);
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 #endif //CRC_H_

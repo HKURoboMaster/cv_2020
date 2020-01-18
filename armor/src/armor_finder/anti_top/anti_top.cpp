@@ -50,13 +50,15 @@ void ArmorFinder::antiTop() {
         systime curr_time;
         getsystime(curr_time);
         uint16_t shoot_delay = front_time + periodms * 2 - curr_time;
+        /*
         if (anti_top_cnt < 4) {
-            sendBoxPosition(0);
+            //sendBoxPosition(0);
         } else if (abs(once_periodms - top_periodms[-1]) > 50) {
-            sendBoxPosition(0);
+            //sendBoxPosition(0);
         } else {
-            sendBoxPosition(shoot_delay);
+            //sendBoxPosition(shoot_delay);
         }
+        */
         time_seq.clear();
         angle_seq.clear();
         last_front_time = front_time;
@@ -65,7 +67,7 @@ void ArmorFinder::antiTop() {
         double dx = target_box.rect.x + target_box.rect.width / 2 - IMAGE_CENTER_X;
         double yaw = atan(dx / FOCUS_PIXAL) * 180 / PI;
         angle_seq.emplace_back(yaw);
-        sendBoxPosition(0);
+        //sendBoxPosition(0);
     }
     anti_top_cnt++;
 }
