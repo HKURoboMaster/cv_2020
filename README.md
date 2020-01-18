@@ -186,3 +186,4 @@ struct SendData {
 - 根据今年相机参数调整阈值等等参数。
 - 距离计算部分代码存在BUG，需要根据相机的视觉场角重写距离计算。
 - 添加从STM32获取信息的部分。
+- 添加Disable Enable Classifiler 两种解决方案。
